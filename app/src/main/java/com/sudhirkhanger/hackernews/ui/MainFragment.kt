@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.sudhirkhanger.hackernews.HackerNewsComponent
 import com.sudhirkhanger.hackernews.databinding.FragmentMainBinding
-import timber.log.Timber
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
@@ -61,7 +60,7 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        newsAdapter = NewsAdapter(mutableListOf())
+        newsAdapter = NewsAdapter { }
 
         binding?.newsRv?.apply {
             setHasFixedSize(true)
