@@ -6,14 +6,15 @@ import androidx.lifecycle.viewModelScope
 import com.sudhirkhanger.hackernews.HackerNewsRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import timber.log.Timber
 
 class MainViewModel internal constructor(
     private val repository: HackerNewsRepository
 ) : ViewModel() {
 
     init {
-        viewModelScope.launch { if (repository.getAllNews().isEmpty()) fetchNews() }
+        viewModelScope.launch {
+            if (repository.getAllNews().isEmpty()) fetchNews()
+        }
     }
 
     fun getNews() = liveData {

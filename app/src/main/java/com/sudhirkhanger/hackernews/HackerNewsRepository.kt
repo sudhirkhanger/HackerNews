@@ -1,6 +1,5 @@
 package com.sudhirkhanger.hackernews
 
-import android.util.Log
 import com.sudhirkhanger.hackernews.db.HackerNewsDao
 import com.sudhirkhanger.hackernews.network.HackerNewsService
 import com.sudhirkhanger.hackernews.utilities.DEFAULT_QUERY

@@ -11,13 +11,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.sudhirkhanger.hackernews.HackerNewsComponent
 import com.sudhirkhanger.hackernews.databinding.FragmentMainBinding
 
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
 class MainFragment : Fragment() {
 
-    private var param1: String? = null
-    private var param2: String? = null
     private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding
     private val viewModel by activityViewModels<MainViewModel> {
@@ -27,21 +22,7 @@ class MainFragment : Fragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            MainFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+        fun newInstance() = MainFragment()
     }
 
     override fun onCreateView(
@@ -53,8 +34,8 @@ class MainFragment : Fragment() {
     }
 
     override fun onDestroyView() {
-        super.onDestroyView()
         _binding = null
+        super.onDestroyView()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -65,10 +46,10 @@ class MainFragment : Fragment() {
         binding?.newsRv?.apply {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(this.context)
-            adapter = newsAdapter
         }
 
         viewModel.getNews().observe(viewLifecycleOwner) {
+            if (binding?.newsRv?.adapter == null) binding?.newsRv?.adapter = newsAdapter
             newsAdapter.submitList(it)
         }
 
