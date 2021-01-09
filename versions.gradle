@@ -1,0 +1,20 @@
+ext.deps = [:]
+
+def versions = [:]
+versions.kotlin = "1.4.21"
+versions.android_gradle_plugin = "4.1.1"
+versions.retrofit = "2.9.0"
+ext.versions = versions
+
+deps.android_gradle_plugin = "com.android.tools.build:gradle:$versions.android_gradle_plugin"
+
+def kotlin = [:]
+kotlin.plugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$versions.kotlin"
+deps.kotlin = kotlin
+
+def retrofit = [:]
+retrofit.runtime = "com.squareup.retrofit2:retrofit:$versions.retrofit"
+retrofit.gson_converter = "com.squareup.retrofit2:converter-gson:$versions.retrofit"
+deps.retrofit = retrofit
+
+ext.deps = deps
