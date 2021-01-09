@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.sudhirkhanger.hackernews.NewsComponent
 import com.sudhirkhanger.hackernews.databinding.FragmentMainBinding
-import timber.log.Timber
 
 class MainFragment : Fragment() {
 
@@ -49,7 +48,7 @@ class MainFragment : Fragment() {
             layoutManager = LinearLayoutManager(this.context)
         }
 
-        viewModel.getNews().observe(viewLifecycleOwner) {
+        viewModel.news().observe(viewLifecycleOwner) {
             if (binding?.newsRv?.adapter == null) binding?.newsRv?.adapter = newsAdapter
             newsAdapter.submitList(it)
         }
@@ -62,7 +61,7 @@ class MainFragment : Fragment() {
                 val linearLayoutManager = binding?.newsRv?.layoutManager as LinearLayoutManager
 
                 if (linearLayoutManager.findLastCompletelyVisibleItemPosition() ==
-                    viewModel.getNews().value?.size?.minus(1) ?: -1
+                    viewModel.news().value?.size?.minus(1) ?: -1
                 ) {
                     viewModel.fetchNews()
                 }

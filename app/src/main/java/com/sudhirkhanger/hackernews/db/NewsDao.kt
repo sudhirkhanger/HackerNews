@@ -1,5 +1,6 @@
 package com.sudhirkhanger.hackernews.db
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -9,14 +10,14 @@ import androidx.room.Query
 interface NewsDao {
 
     @Query("SELECT COUNT(*) FROM news")
-    suspend fun newsSize(): Int
+    suspend fun count(): Int
 
     @Query("SELECT * FROM news")
-    suspend fun newsItems(): List<Article>
+    fun news(): LiveData<List<Article>>
 
     @Query("SELECT * FROM news WHERE object_id = :objectId")
-    suspend fun newsArticleById(objectId: String): Article
+    fun newsById(objectId: String): Article
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertNewsArticles(articles: List<Article?>?)
+    suspend fun insertNews(articles: List<Article?>?)
 }

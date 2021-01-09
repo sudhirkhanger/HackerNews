@@ -28,8 +28,8 @@ class NewsRepository private constructor(
                 }
     }
 
-    suspend fun getNews() = newsDao.newsItems()
-    suspend fun newsSize() = newsDao.newsSize()
+    fun news() = newsDao.news()
+    suspend fun newsCount() = newsDao.count()
 
     fun fetchNews(coroutineContext: CoroutineContext) {
         val nbPageCount = NewsComponent.sharedPreference()?.getInt(NB_PAGE_COUNT, -1) ?: -1
@@ -43,7 +43,7 @@ class NewsRepository private constructor(
                 val newsResponse = newsService.getNews(DEFAULT_QUERY, pageRequested)
                 val body = newsResponse.body()
                 if (newsResponse.isSuccessful && body != null)
-                    newsDao.insertNewsArticles(body.articles)
+                    newsDao.insertNews(body.articles)
             } catch (e: Exception) {
                 Timber.e(e, "Some error occurred")
             }
