@@ -6,16 +6,16 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.sudhirkhanger.hackernews.databinding.ItemArticleBinding
-import com.sudhirkhanger.hackernews.db.HitsItem
+import com.sudhirkhanger.hackernews.db.Article
 
 class NewsAdapter(private val onClick: (String?) -> Unit) :
-    ListAdapter<HitsItem, NewsAdapter.NewsViewHolder>(NewsDiffUtil()) {
+    ListAdapter<Article, NewsAdapter.NewsViewHolder>(NewsDiffUtil()) {
 
-    class NewsDiffUtil : DiffUtil.ItemCallback<HitsItem>() {
-        override fun areItemsTheSame(oldItem: HitsItem, newItem: HitsItem): Boolean =
+    class NewsDiffUtil : DiffUtil.ItemCallback<Article>() {
+        override fun areItemsTheSame(oldItem: Article, newItem: Article): Boolean =
             oldItem == newItem
 
-        override fun areContentsTheSame(oldItem: HitsItem, newItem: HitsItem): Boolean =
+        override fun areContentsTheSame(oldItem: Article, newItem: Article): Boolean =
             oldItem == newItem
     }
 
@@ -31,7 +31,7 @@ class NewsAdapter(private val onClick: (String?) -> Unit) :
     inner class NewsViewHolder(private val binding: ItemArticleBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(article: HitsItem?) {
+        fun bind(article: Article?) {
             binding.textView.text = article?.title
         }
     }

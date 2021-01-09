@@ -3,14 +3,13 @@ package com.sudhirkhanger.hackernews.db
 import androidx.annotation.NonNull
 import androidx.room.ColumnInfo
 import androidx.room.Entity
-import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
 data class HackerNewsResponse(
 
     @field:SerializedName("hits")
-    val hits: List<HitsItem?>? = null,
+    val articles: List<Article?>? = null,
 
     @field:SerializedName("page")
     val page: Int? = null,
@@ -19,8 +18,8 @@ data class HackerNewsResponse(
     val nbPages: Int? = null,
 )
 
-@Entity
-data class HitsItem(
+@Entity(tableName = "news")
+data class Article(
 
     @field:SerializedName("created_at")
     @ColumnInfo(name = "created_at")

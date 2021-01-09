@@ -8,15 +8,16 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.sudhirkhanger.hackernews.HackerNewsComponent
+import com.sudhirkhanger.hackernews.NewsComponent
 import com.sudhirkhanger.hackernews.databinding.FragmentMainBinding
+import timber.log.Timber
 
 class MainFragment : Fragment() {
 
     private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding
     private val viewModel by activityViewModels<MainViewModel> {
-        HackerNewsComponent.provideMainViewModelFactory()
+        NewsComponent.provideMainViewModelFactory()
     }
     private lateinit var newsAdapter: NewsAdapter
 

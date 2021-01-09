@@ -2,10 +2,10 @@ package com.sudhirkhanger.hackernews.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.sudhirkhanger.hackernews.HackerNewsRepository
+import com.sudhirkhanger.hackernews.NewsRepository
 
 class MainViewModelFactory(
-    private val repository: HackerNewsRepository
+    private val repository: NewsRepository
 ) : ViewModelProvider.Factory {
 
     @Suppress("UNCHECKED_CAST")

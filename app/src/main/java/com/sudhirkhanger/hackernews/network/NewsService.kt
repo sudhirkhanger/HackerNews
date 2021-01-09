@@ -9,7 +9,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-interface HackerNewsService {
+interface NewsService {
 
     @GET("search")
     suspend fun getNews(
@@ -20,7 +20,7 @@ interface HackerNewsService {
     companion object {
         private const val BASE_URL = "https://hn.algolia.com/api/v1/"
 
-        fun create(): HackerNewsService {
+        fun create(): NewsService {
             val logger =
                 HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BASIC }
 
@@ -33,7 +33,7 @@ interface HackerNewsService {
                 .client(client)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
-                .create(HackerNewsService::class.java)
+                .create(NewsService::class.java)
         }
     }
 }
