@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.sudhirkhanger.hackernews.NewsComponent
@@ -19,6 +20,8 @@ class MainFragment : Fragment() {
         NewsComponent.provideMainViewModelFactory()
     }
     private lateinit var newsAdapter: NewsAdapter
+    private lateinit var layoutManager: LinearLayoutManager
+    private var rvItemSize = -1
 
     companion object {
         @JvmStatic
@@ -43,13 +46,19 @@ class MainFragment : Fragment() {
 
         newsAdapter = NewsAdapter { }
 
+        layoutManager = LinearLayoutManager(requireContext())
+        val dividerItemDecoration =
+            DividerItemDecoration(requireContext(), layoutManager.orientation)
+
         binding?.newsRv?.apply {
             setHasFixedSize(true)
-            layoutManager = LinearLayoutManager(this.context)
+            layoutManager = this@MainFragment.layoutManager
+            addItemDecoration(dividerItemDecoration)
         }
 
         viewModel.news().observe(viewLifecycleOwner) {
             if (binding?.newsRv?.adapter == null) binding?.newsRv?.adapter = newsAdapter
+            rvItemSize = it.size
             newsAdapter.submitList(it)
         }
 
@@ -60,9 +69,7 @@ class MainFragment : Fragment() {
 
                 val linearLayoutManager = binding?.newsRv?.layoutManager as LinearLayoutManager
 
-                if (linearLayoutManager.findLastCompletelyVisibleItemPosition() ==
-                    viewModel.news().value?.size?.minus(1) ?: -1
-                ) {
+                if (linearLayoutManager.findLastCompletelyVisibleItemPosition() == rvItemSize - 1) {
                     viewModel.fetchNews()
                 }
             }

@@ -1,5 +1,6 @@
 package com.sudhirkhanger.hackernews
 
+import androidx.core.content.edit
 import com.sudhirkhanger.hackernews.db.NewsDao
 import com.sudhirkhanger.hackernews.network.NewsService
 import com.sudhirkhanger.hackernews.utilities.DEFAULT_QUERY
@@ -37,13 +38,17 @@ class NewsRepository private constructor(
         if (nbPageCount != 0) fetchNewsByPage(coroutineContext, pageCount)
     }
 
-    private fun fetchNewsByPage(coroutineContext: CoroutineContext, pageRequested: Int) {
+    private fun fetchNewsByPage(coroutineContext: CoroutineContext, page: Int) {
         CoroutineScope(coroutineContext).launch {
             try {
-                val newsResponse = newsService.getNews(DEFAULT_QUERY, pageRequested)
+                val newsResponse = newsService.getNews(DEFAULT_QUERY, page)
                 val body = newsResponse.body()
-                if (newsResponse.isSuccessful && body != null)
+                if (newsResponse.isSuccessful && body != null) {
+                    NewsComponent.sharedPreference()?.edit { putInt(PAGE_COUNT, page + 1) }
+                    NewsComponent.sharedPreference()
+                        ?.edit { putInt(NB_PAGE_COUNT, body.nbPages ?: -1) }
                     newsDao.insertNews(body.articles)
+                }
             } catch (e: Exception) {
                 Timber.e(e, "Some error occurred")
             }
