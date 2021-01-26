@@ -26,9 +26,11 @@ data class Article(
     val createdAt: String? = null,
 
     @field:SerializedName("title")
+    @ColumnInfo(name = "title")
     val title: String? = null,
 
     @field:SerializedName("url")
+    @ColumnInfo(name = "url")
     val url: String? = null,
 
     @PrimaryKey(autoGenerate = false)
